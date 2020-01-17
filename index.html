@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Ingrese nombre </h3>
+    <form action="">
+        <input type="text" onkeyup="ejecutarAjax(this.value)">
+    </form>
+    <div id="info">
+
+    </div>
+    <script>
+        let resultado  = document.getElementById("info");
+        function ejecutarAjax(usuario) {
+            let consulta_ajax = new XMLHttpRequest();
+            if(usuario.length === 0) {
+                console.log("aun no escribiste nada");
+                resultado.innerHTML = "No escribiste nada";
+            }
+            else {
+                consulta_ajax.onreadystatechange = function() {             
+                    if(consulta_ajax.readyState ===4 && consulta_ajax.status === 200) {
+                    let datos= consulta_ajax.responseText;
+                    document.getElementById("info").innerHTML = datos;
+                    }
+                }
+             }
+        consulta_ajax.open("GET","servidor.php?nombre="+usuario,true);
+        consulta_ajax.send();
+        }
+    </script>
+</body>
+</html>

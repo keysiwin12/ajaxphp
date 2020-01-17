@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <div id="main">
+        <form name="fo" action="servidor.php" method="POST">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre" required> <br>
+            <label for="email">Email</label>
+            <input type="text" name="mail" id="mail" required> <br>
+            <label for="mensaje">Mensaje</label>
+            <textarea name="mensaje" id="mensaje" cols="30" rows="10"></textarea> <br>
+            <input type="submit" name="send" value="Enviar">
+        </form>
+        <div id="estado"></div>
+        <div id="rservidor"></div>
+    </div>
+ 
+    <script>
+        $(document).on("ready",function_jq());
+
+        function function_jq() {
+            let peticion = $("#main form").attr("action");
+            let metodo = $("#main form").attr("cargando ...");
+            $("#main form").on("submit", function (e) {
+               e.preventDefault();
+               $.ajax({
+                   beforeSend : function() {
+                    $("#estado").text("cargando....");                
+                   },
+                   type: metodo,
+                   url: peticion,
+                   data: $("#main form").serialize(),
+                   success: function (response) {
+                    $("#estado").text("cargo");                       
+                    $("#rservidor").append(response);
+                    console.log(response)                       
+                   },
+                   error : function(error,status){
+                    console.log(error);
+                    console.log(status);
+                   }
+               });
+            });
+         }   
+    </script>
+</body>
+</html>
